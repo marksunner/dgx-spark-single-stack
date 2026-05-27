@@ -65,13 +65,42 @@ volumes:
   honcho_db:
 ```
 
-### 2. Start Honcho
+### 2. Create .env for Honcho
+
+Honcho needs configuration for embeddings and its "deriver" (which generates insights from conversations). Create a `.env` file:
 
 ```bash
-docker compose up -d
+LOG_LEVEL=INFO
+AUTH_USE_AUTH=false
+DB_CONNECTION_URI=postgresql+psycopg://postgres:postgres@database:5432/postgres
+
+# Embeddings (OpenAI text-embedding-3-small — very cheap, ~$0.02/1M tokens)
+EMBED_MESSAGES=true
+EMBEDDING_MODEL_CONFIG__TRANSPORT=openai
+EMBEDDING_MODEL_CONFIG__MODEL=text-embedding-3-small
+LLM_OPENAI_API_KEY=sk-your-openai-key-here
+
+# Deriver — uses the local Qwen model for generating insights
+DERIVER_MODEL_CONFIG__TRANSPORT=openai
+DERIVER_MODEL_CONFIG__MODEL=qwen3.5-122b
+DERIVER_MODEL_CONFIG__OVERRIDES__BASE_URL=http://localhost:8000/v1
+DERIVER_MODEL_CONFIG__OVERRIDES__API_KEY_ENV=DUMMY
+DERIVER_WORKERS=1
+
+VECTOR_STORE_TYPE=pgvector
 ```
 
-### 3. Configure Hermes to use Honcho
+> **Note:** The deriver points at the local vLLM instance — so Honcho's memory processing uses the same Qwen model at zero additional cost. Only embeddings use the OpenAI API (text-embedding-3-small is extremely cheap).
+
+### 3. Build and Start Honcho
+
+```bash
+docker compose up -d --build
+```
+
+First build takes a few minutes (building the API and deriver images). Subsequent starts are instant.
+
+### 4. Configure Hermes to use Honcho
 
 Add to `~/.hermes/config.yaml`:
 

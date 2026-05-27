@@ -73,6 +73,7 @@ See [`docs/honcho-setup.md`](docs/honcho-setup.md).
 
 ## Documentation
 
+- **[`docs/complete-walkthrough.md`](docs/complete-walkthrough.md) — START HERE: Build the entire stack from scratch in ~2 hours**
 - [`docs/vllm-config.md`](docs/vllm-config.md) — vLLM flag reference and OOM prevention
 - [`docs/hybrid-checkpoint.md`](docs/hybrid-checkpoint.md) — Building the hybrid INT4+FP8 checkpoint
 - [`docs/hermes-setup.md`](docs/hermes-setup.md) — Agent runtime installation
