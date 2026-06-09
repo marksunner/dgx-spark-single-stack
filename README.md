@@ -82,6 +82,12 @@ See [`docs/honcho-setup.md`](docs/honcho-setup.md).
 - [`docs/troubleshooting.md`](docs/troubleshooting.md) — Common issues and fixes
 - [`docs/benchmarks.md`](docs/benchmarks.md) — Performance testing methodology
 
+## Model Bake-Off
+
+We ran a head-to-head comparison: same research task, same agent framework, Qwen 3.5 122B vs Step 3.7 Flash on separate single Sparks. Qwen was ~6.7× faster (4 min vs 27 min); Step 3.7 went deeper on source analysis and contradiction resolution.
+
+Full results and methodology: **[Model Bake-Off in the umbrella repo](https://github.com/marksunner/dgx-spark#model-bake-off-research-task-quality)**
+
 ## Credits
 
 This configuration builds on the work of several people:
